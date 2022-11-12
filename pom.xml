@@ -93,11 +93,6 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -118,7 +113,11 @@
 					<compilerPlugins>
 						<plugin>spring</plugin>
 						<plugin>jpa</plugin>
+						<plugin>no-arg</plugin>
 					</compilerPlugins>
+					<pluginOptions>
+						<option>no-arg:annotation=com.walnutvw.vehicle.config.NoArgConstructor</option>
+					</pluginOptions>
 				</configuration>
 				<dependencies>
 					<dependency>

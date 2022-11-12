@@ -1,0 +1,27 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/master.yaml
+    parameters:
+      appName: VEHICLE
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
+          lob:
+            non_contextual_creation: true
+        default_schema: vehicle
+    open-in-view: false
+#logging:
+#  level:
+#    org:
+#      springframework: debug

@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1000
+      author: liquibase
+      changes:
+        - sql:
+            schemaName: ${appSchema}
+            splitStatements: true
+            sql: create table vehicle
+              (
+                id uuid constraint vehicle_pk primary key, 
+                vin varchar not null,
+                make varchar not null,
+                model varchar not null,
+                purchase_date timestamp not null,
+                created_at timestamp not null,
+                updated_at timestamp not null,
+                updated_by varchar
+              ); 
+              comment on table motorcycle is 'Hold information about vehicles'
+

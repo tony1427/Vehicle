@@ -10,6 +10,7 @@ spring:
     change-log: classpath:liquibase/master.yaml
     parameters:
       appName: VEHICLE
+#    default-schema: vehicle <-- this will try to create a table under the schema name set here
   jpa:
     show-sql: true
     properties:
@@ -19,9 +20,9 @@ spring:
           time_zone: UTC
           lob:
             non_contextual_creation: true
-        default_schema: vehicle
+#        default_schema: vehicle <-- this tries to query tables under the schema set here
     open-in-view: false
-#logging:
-#  level:
-#    org:
-#      springframework: debug
+logging:
+  level:
+    org:
+      springframework: debug

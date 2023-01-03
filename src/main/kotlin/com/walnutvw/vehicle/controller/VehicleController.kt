@@ -1,8 +1,10 @@
 package com.walnutvw.vehicle.controller
 
 
+import com.github.fge.jsonpatch.JsonPatch
 import com.walnutvw.vehicle.model.VehicleRepresentation
 import com.walnutvw.vehicle.service.VehicleService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -24,8 +26,14 @@ class VehicleController(
 ) {
 
     @GetMapping("/{id}")
-    fun getMotocycles(@PathVariable id: String): VehicleRepresentation {
+    fun getVehicles(@PathVariable id: String): VehicleRepresentation {
         return vehicleService.getVehicle(id)
+    }
+
+    @GetMapping
+    fun getAllVehicles(): ResponseEntity<Unit>{
+        //Need to implement the service to get all the vehicles
+        return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
     @PostMapping
@@ -53,13 +61,13 @@ class VehicleController(
         return entityNoContentResponse()
     }
 
-//    @PatchMapping("/{id}", consumes = ["application/json-patch+json"])
-//    fun updateMotocycles(@PathVariable id: String, @RequestBody patch: JsonPatch): ResponseEntity<Unit> {
-//        println(patch)
-//        vehicleService.patchVehicle(id, patch)
-//
-//        return entityNoContentResponse()
-//    }
+    @PatchMapping("/patch/{id}", consumes = ["application/json-patch+json"])
+    fun patchMotocycles(@PathVariable id: String, @RequestBody patch: JsonPatch): ResponseEntity<Unit> {
+        println(patch)
+        vehicleService.patchVehicle(id, patch)
+
+        return entityNoContentResponse()
+    }
 
     @DeleteMapping("/{id}")
     fun deleteVehicles() {

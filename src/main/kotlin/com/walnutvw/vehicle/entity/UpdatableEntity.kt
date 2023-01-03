@@ -24,7 +24,7 @@ abstract class UpdatableEntity {
 
     @Column(name = "updated_at")
     @LastModifiedDate
-    val updatedAt: OffsetDateTime = OffsetDateTime.now()
+    var updatedAt: OffsetDateTime = OffsetDateTime.now()
 
 
     override fun equals(other: Any?): Boolean {

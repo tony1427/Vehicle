@@ -1,5 +1,6 @@
 package com.walnutvw.vehicle.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.walnutvw.vehicle.entity.VehicleEntity
 import com.walnutvw.vehicle.exception.BadActionException
 import com.walnutvw.vehicle.exception.NotFoundException
@@ -45,7 +46,8 @@ internal class VehicleServiceTest {
             vehicleRepository,
             ModelMapper(),
             ApplicationFactory(),
-            vehicleServiceHelper
+            vehicleServiceHelper,
+            ObjectMapper()
         )
     }
 

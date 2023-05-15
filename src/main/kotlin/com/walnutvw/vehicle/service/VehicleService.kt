@@ -31,6 +31,11 @@ class VehicleService(
             .orElseThrow { NotFoundException() }
     }
 
+    fun getVehicles(): List<VehicleRepresentation> {
+        return vehicleRepository.findAll()
+                .map { modelMapper.map(it, VehicleRepresentation::class.java) }
+    }
+
     fun createVehicle(vehicleRepresentation: VehicleRepresentation): VehicleRepresentation {
         return vehicleRepository.save(vehicleRepresentation.toEntity()).toRepresentation()
     }

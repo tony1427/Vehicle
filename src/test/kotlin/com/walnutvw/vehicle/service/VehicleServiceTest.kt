@@ -67,13 +67,36 @@ internal class VehicleServiceTest {
 
     @Test
     fun `get vehicle by id throws not found exception`() {
-        val vehicle = createRandomVehicle()
         val uuid = UUID.randomUUID()
 
         every { vehicleRepository.findById(uuid) }.returns(Optional.empty())
 
         assertThrows(NotFoundException::class.java){ vehicleService.getVehicle(uuid.toString())}
         verify(exactly = 1) { vehicleRepository.findById(uuid) }
+    }
+
+    @Test
+    fun `get all vehicles returns data`() {
+        val vehicle1 = createRandomVehicle()
+        val vehicle2 = createRandomVehicle()
+        val vehicleList = arrayListOf(vehicle1.toEntity(), vehicle2.toEntity())
+
+        every { vehicleRepository.findAll() }.returns(vehicleList)
+
+        val vehicles = vehicleService.getVehicles()
+        assertThat(vehicles).isNotEmpty
+        assertThat(vehicles.size).isEqualTo(2)
+        assertThat(vehicles[0]).isEqualTo(vehicle1)
+        assertThat(vehicles[1]).isEqualTo(vehicle2)
+    }
+
+    @Test
+    fun `get all vehicles returns an empty list`() {
+        every { vehicleRepository.findAll() }.returns(emptyList())
+
+        val vehicles = vehicleService.getVehicles()
+
+        assertThat(vehicles).isEmpty()
     }
 
     @Test

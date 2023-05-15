@@ -58,6 +58,40 @@ internal class VehicleControllerTest(@Autowired val mockMvc: MockMvc) {
     }
 
     @Test
+    fun `get all vehicles when some exist`() {
+        val vehicle1 = createRandomVehicle()
+        val vehicle2 = createRandomVehicle()
+        val vehicleList = arrayListOf(vehicle1, vehicle2)
+
+        every { vehicleService.getVehicles() } returns vehicleList
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/$VEHICLES"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$").isArray)
+                .andExpect(jsonPath("$").isNotEmpty)
+                .andExpect(jsonPath("$[0].vin").value(vehicle1.vin))
+                .andExpect(jsonPath("$[0].make").value(vehicle1.make))
+                .andExpect(jsonPath("$[0].model").value(vehicle1.model))
+                .andExpect(jsonPath("$[0].purchaseDate").value(vehicle1.purchaseDate.toString()))
+                .andExpect(jsonPath("$[1].vin").value(vehicle2.vin))
+                .andExpect(jsonPath("$[1].make").value(vehicle2.make))
+                .andExpect(jsonPath("$[1].model").value(vehicle2.model))
+                .andExpect(jsonPath("$[1].purchaseDate").value(vehicle2.purchaseDate.toString()))
+                .andDo(MockMvcResultHandlers.print())
+    }
+
+    @Test
+    fun `get all vehicles returns an empty list`() {
+        every { vehicleService.getVehicles() } returns emptyList()
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/$VEHICLES"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$").isArray)
+                .andExpect(jsonPath("$").isEmpty)
+                .andReturn()
+    }
+
+    @Test
     fun `create vehicle should return created status`() {
         val vehicle = createRandomVehicle()
         every { vehicleService.createVehicle(vehicle) }

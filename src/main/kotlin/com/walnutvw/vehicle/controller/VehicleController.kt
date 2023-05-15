@@ -31,9 +31,8 @@ class VehicleController(
     }
 
     @GetMapping
-    fun getAllVehicles(): ResponseEntity<Unit>{
-        //Need to implement the service to get all the vehicles
-        return ResponseEntity(HttpStatus.NOT_FOUND)
+    fun getAllVehicles(): List<VehicleRepresentation> {
+        return vehicleService.getVehicles()
     }
 
     @PostMapping
@@ -44,7 +43,7 @@ class VehicleController(
     }
 
     @PutMapping("/{id}")
-    fun updateMotocycles(
+    fun updateVehicle(
         @PathVariable id: String,
         @RequestBody vehicleRepresentation: VehicleRepresentation
     ): ResponseEntity<Unit> {
@@ -55,14 +54,14 @@ class VehicleController(
     }
 
     @PatchMapping("/{id}")
-    fun updateMotocycles(@PathVariable id: String,@RequestBody map: Map<String, String>): ResponseEntity<Unit> {
+    fun updateVehicle(@PathVariable id: String,@RequestBody map: Map<String, String>): ResponseEntity<Unit> {
         vehicleService.updateVehicle(id, map)
 
         return entityNoContentResponse()
     }
 
     @PatchMapping("/patch/{id}", consumes = ["application/json-patch+json"])
-    fun patchMotocycles(@PathVariable id: String, @RequestBody patch: JsonPatch): ResponseEntity<Unit> {
+    fun patchVehicle(@PathVariable id: String, @RequestBody patch: JsonPatch): ResponseEntity<Unit> {
         println(patch)
         vehicleService.patchVehicle(id, patch)
 
